@@ -21,7 +21,7 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid()) @db.Uuid
   email     String   @unique
   password  String
   role      UserRole @default(USER)
@@ -32,7 +32,7 @@ model User {
 }
 
 model Planet {
-  id              String      @id @default(cuid())
+  id              String      @id @default(uuid()) @db.Uuid
   name            String      @unique
   type            PlanetType
   mass            Float
@@ -46,11 +46,11 @@ model Planet {
 }
 
 model Satellite {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid()) @db.Uuid
   name      String   @unique
   mass      Float
   radius    Float
-  planetId  String
+  planetId  String   @db.Uuid
   planet    Planet   @relation(fields: [planetId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
